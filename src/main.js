@@ -267,6 +267,9 @@ function checkCollisions() {
     questions.forEach((question) => {
       if (question.question) {
         if (sous_question(boat.boat, question.question)) {
+          
+          //Ecrire la fonction quizz ici
+
           scene.remove(question.question);
         }
       }
