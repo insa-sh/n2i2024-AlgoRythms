@@ -14,12 +14,32 @@ const loader = new GLTFLoader();
 
 class Boat {
   constructor() {
-    loader.load('assets/boat/scene.gltf', function (gltf) {
+    loader.load('assets/boat/scene.gltf', (gltf) => {
       scene.add(gltf.scene);
       gltf.scene.position.set(5, 14, 50);
       gltf.scene.scale.set(3, 3, 3);
       gltf.scene.rotation.y = Math.PI / 2;
+
+      this.boat = gltf.scene;
+      this.speed = {
+        vel: 0,
+        rot: 0,
+        xrot: 0
+      }
     });
+  }
+
+  // stop() {
+  //   this.speed.vel = 0;
+  //   this.speed.rot = 0;
+  //   this.speed.xrot = 0;
+  // }
+  update() {
+    if (this.boat) {
+      this.boat.translateX(this.speed.vel);
+      this.boat.rotation.y += this.speed.rot;
+      this.boat.rotation.x += this.speed.xrot;
+    }
   }
 }
 
@@ -144,6 +164,38 @@ function init() {
 
   window.addEventListener( 'resize', onWindowResize );
 
+  window.addEventListener( 'keydown', function(e) {
+    if (e.key === 'l') {
+      boat.speed.xrot = 0.02;
+    }
+
+    if (e.key === 'ArrowUp') {
+      boat.speed.vel = 0.5;
+    }
+    if (e.key === 'ArrowDown') {
+      boat.speed.vel = -0.5;
+    }
+
+    if (e.key === 'ArrowLeft') {
+      boat.speed.rot = 0.04;
+    }
+    if (e.key === 'ArrowRight') {
+      boat.speed.rot = -0.04;
+    }
+  });
+
+  window.addEventListener( 'keyup', function(e) {
+    if (e.key === 'l') {
+      boat.speed.xrot = 0;
+    }
+
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      boat.speed.vel = 0;
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      boat.speed.rot = 0;
+    }
+  });
 }
 
 function onWindowResize() {
@@ -156,8 +208,8 @@ function onWindowResize() {
 }
 
 function animate() {
-
   render();
+  boat.update();
 
 }
 
