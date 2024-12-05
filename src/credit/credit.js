@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';  
 
+/*---[Scene setup]---*/
 const scene = new THREE.Scene();
-
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -22,17 +22,33 @@ scene.add(new THREE.AmbientLight(0xffffff, 1.0));
 
 scene.background = new THREE.Color(0x000000);
 
+/*---[Text handling]---*/
 const loader = new FontLoader();
+
+const textGroup = new THREE.Group();
+scene.add(textGroup);
 
 let textMeshes = [];
 loader.load('/helvetiker_regular.typeface.json', function (font) {
-
     const texts = ['TEXT 1', 'TEXT 2', 'TEXT 3'];  // Array of text to generate
-    const spacing = 5
+    const spacing = 6;
 
     texts.forEach((text, index) => {
         createTextMesh(font, text, index * spacing);
     });
+
+    const pivot = new THREE.Object3D();
+    pivot.position.set(0, 20, 0);
+    textMeshes.forEach(mesh => {
+        pivot.add(mesh);  // Add each text mesh to the pivot
+    });
+
+    scene.add(pivot);
+
+    pivot.rotation.x = -Math.PI / 4;
+
+    window.textPivot = pivot;
+
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -58,6 +74,7 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
             window.location.href = 'https://www.example.com'; // Replace with your desired link
         }
     }
+
 });
 
 function createTextMesh(font, text, yOffset) {
@@ -81,19 +98,26 @@ function createTextMesh(font, text, yOffset) {
     textMesh.position.z = -50;
     textMesh.position.x = -textWidth / 2;
     textMesh.position.y = yOffset - textHeight / 2;
-    textMesh.rotation.x = -Math.PI / 4;
+    textGroup.add(textMesh); 
     scene.add(textMesh);
 
     // Add to array
     textMeshes.push(textMesh);
 }
 
+function rotateTextBlock(angle) {
+    textMeshes.forEach((mesh) => {
+        // Apply rotation around X axis
+        mesh.rotation.x = angle;
+    });
+}
+
 // ANIMATE
 function animate() {
-    textMeshes.forEach(mesh => {
-        mesh.position.y += 0.05;
-        mesh.position.z -= 0.05;
-    });
+    if (window.textPivot) {
+        window.textPivot.position.y += 0.05;
+        window.textPivot.position.z -= 0.05;
+    }
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
