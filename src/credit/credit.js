@@ -27,7 +27,7 @@ const loader = new FontLoader();
 var starWarsText;
 loader.load('/helvetiker_regular.typeface.json', function (font) {
 
-    const text = 'Mael Advisse\ntest mdr\ntest 2'
+    const text = 'TEST\ntest mdr\ntest 2'
 
     const geometry = new TextGeometry(text, {
         font: font,
@@ -52,6 +52,31 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     starWarsText.position.y = -textHeight / 2;
     starWarsText.rotation.x = - Math.PI / 4
     scene.add(starWarsText)
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener('click', onClick, false);
+
+    function onMouseMove(event) {
+        // Normalize mouse coordinates
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    }
+
+    function onClick(event) {
+        // Set up raycast to detect click on the text mesh
+        raycaster.setFromCamera(mouse, camera);
+
+        // Check for intersections with the text
+        const intersects = raycaster.intersectObject(starWarsText);
+
+        if (intersects.length > 0) {
+            // When the user clicks on the text, open the link
+            window.location.href = 'https://www.example.com'; // Replace with your desired link
+        }
+    }
 });
 
 
