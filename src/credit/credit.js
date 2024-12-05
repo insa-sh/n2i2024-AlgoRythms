@@ -30,11 +30,15 @@ scene.add(textGroup);
 
 let textMeshes = [];
 loader.load('/helvetiker_regular.typeface.json', function (font) {
-    const texts = ['TEXT 1', 'TEXT 2', 'TEXT 3'];  // Array of text to generate
+    const texts = [
+        { text: 'TEXT 1', link: 'https://www.example1.com' },
+        { text: 'TEXT 2', link: '' },  // No link for this one
+        { text: 'TEXT 3', link: 'https://www.example3.com' }
+    ];
     const spacing = 6;
 
-    texts.forEach((text, index) => {
-        createTextMesh(font, text, index * spacing);
+    texts.forEach((textData, index) => {
+        createTextMesh(font, textData, index * spacing);
     });
 
     const pivot = new THREE.Object3D();
@@ -63,22 +67,29 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     }
 
     function onClick(event) {
-        // Set up raycast to detect click on any text mesh
+         // Set up raycast to detect click on the text meshes
         raycaster.setFromCamera(mouse, camera);
 
-        // Check for intersections with the array of text meshes
-        const intersects = raycaster.intersectObjects(textMeshes);
+        // Check for intersections with clickable text meshes
+        const intersects = raycaster.intersectObjects(clickableTextMeshes.map(item => item.mesh));
 
         if (intersects.length > 0) {
-            // When the user clicks on any text, open the link
-            window.location.href = 'https://www.example.com'; // Replace with your desired link
+            const clickedMesh = intersects[0].object;
+            // Find the corresponding link for the clicked mesh
+            const clickedText = clickableTextMeshes.find(item => item.mesh === clickedMesh);
+            if (clickedText && clickedText.link) {
+                // Open the URL associated with this mesh
+                window.location.href = clickedText.link;
+            }
         }
     }
 
 });
 
-function createTextMesh(font, text, yOffset) {
-    const geometry = new TextGeometry(text, {
+const clickableTextMeshes = [];  // Array to hold clickable text meshes
+
+function createTextMesh(font, textData, yOffset) {
+    const geometry = new TextGeometry(textData.text, {
         font: font,
         size: 4,
         depth: 1,
@@ -88,16 +99,29 @@ function createTextMesh(font, text, yOffset) {
     const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
     const textHeight = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
 
-    const materials = [
-        new THREE.MeshPhongMaterial({ color: 0xffffff }), // front
-        new THREE.MeshPhongMaterial({ color: 0x999999 }) // side
-    ];
+    let materials;
+    if (textData.link) {
+        materials = [
+            new THREE.MeshPhongMaterial({ color: 0x0000ff }), // front
+            new THREE.MeshPhongMaterial({ color: 0x000099 }) // side
+        ];
+    } else {
+        materials = [
+            new THREE.MeshPhongMaterial({ color: 0xffffff }), // front
+            new THREE.MeshPhongMaterial({ color: 0x999999 }) // side
+        ];
+    }
 
     const textMesh = new THREE.Mesh(geometry, materials);
     textMesh.castShadow = true;
     textMesh.position.z = -50;
     textMesh.position.x = -textWidth / 2;
     textMesh.position.y = yOffset - textHeight / 2;
+    
+    if (textData.link) {
+        clickableTextMeshes.push({ mesh: textMesh, link: textData.link });
+    }
+
     textGroup.add(textMesh); 
     scene.add(textMesh);
 
