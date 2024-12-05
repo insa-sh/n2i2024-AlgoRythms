@@ -24,34 +24,15 @@ scene.background = new THREE.Color(0x000000);
 
 const loader = new FontLoader();
 
-var starWarsText;
+let textMeshes = [];
 loader.load('/helvetiker_regular.typeface.json', function (font) {
 
-    const text = 'TEST\ntest mdr\ntest 2'
+    const texts = ['TEXT 1', 'TEXT 2', 'TEXT 3'];  // Array of text to generate
+    const spacing = 5
 
-    const geometry = new TextGeometry(text, {
-        font: font,
-        size: 4,
-        depth: 1,
+    texts.forEach((text, index) => {
+        createTextMesh(font, text, index * spacing);
     });
-
-    geometry.computeBoundingBox();
-
-    const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
-    const textHeight = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
-
-    const materials = [
-        new THREE.MeshPhongMaterial({ color: 0xffffff }), // front
-        new THREE.MeshPhongMaterial({ color: 0x999999 }) // side
-    ];
-
-    starWarsText = new THREE.Mesh(geometry, materials);
-    starWarsText.castShadow = true
-    starWarsText.position.z = -50
-    starWarsText.position.x = -textWidth / 2;
-    starWarsText.position.y = -textHeight / 2;
-    starWarsText.rotation.x = - Math.PI / 4
-    scene.add(starWarsText)
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -66,29 +47,57 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     }
 
     function onClick(event) {
-        // Set up raycast to detect click on the text mesh
+        // Set up raycast to detect click on any text mesh
         raycaster.setFromCamera(mouse, camera);
 
-        // Check for intersections with the text
-        const intersects = raycaster.intersectObject(starWarsText);
+        // Check for intersections with the array of text meshes
+        const intersects = raycaster.intersectObjects(textMeshes);
 
         if (intersects.length > 0) {
-            // When the user clicks on the text, open the link
+            // When the user clicks on any text, open the link
             window.location.href = 'https://www.example.com'; // Replace with your desired link
         }
     }
 });
 
+function createTextMesh(font, text, yOffset) {
+    const geometry = new TextGeometry(text, {
+        font: font,
+        size: 4,
+        depth: 1,
+    });
+
+    geometry.computeBoundingBox();
+    const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+    const textHeight = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
+
+    const materials = [
+        new THREE.MeshPhongMaterial({ color: 0xffffff }), // front
+        new THREE.MeshPhongMaterial({ color: 0x999999 }) // side
+    ];
+
+    const textMesh = new THREE.Mesh(geometry, materials);
+    textMesh.castShadow = true;
+    textMesh.position.z = -50;
+    textMesh.position.x = -textWidth / 2;
+    textMesh.position.y = yOffset - textHeight / 2;
+    textMesh.rotation.x = -Math.PI / 4;
+    scene.add(textMesh);
+
+    // Add to array
+    textMeshes.push(textMesh);
+}
 
 // ANIMATE
 function animate() {
-    if (starWarsText) {
-        starWarsText.position.y += 0.05;
-        starWarsText.position.z -= 0.05;
-    }
+    textMeshes.forEach(mesh => {
+        mesh.position.y += 0.05;
+        mesh.position.z -= 0.05;
+    });
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
 document.body.appendChild(renderer.domElement);
 animate();
+
