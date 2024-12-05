@@ -9,6 +9,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 let camera, scene, renderer;
 let controls, water, sun;
+let boatx = 5, boaty = 14, boatz = 50;
 
 const loader = new GLTFLoader();
 
@@ -20,7 +21,7 @@ class Boat {
   constructor() {
     loader.load('assets/boat/scene.gltf', (gltf) => {
       scene.add(gltf.scene);
-      gltf.scene.position.set(5, 14, 50);
+      gltf.scene.position.set(boatx, boaty, boatz);
       gltf.scene.scale.set(3, 3, 3);
       gltf.scene.rotation.y = Math.PI / 2;
 
@@ -51,7 +52,7 @@ const boat = new Boat();
 class Question {
   constructor(_scene) {
     scene.add(_scene);
-    _scene.position.set(random(-300, 300), 10, -random(0, 300));
+    _scene.position.set(random(-200, 200), 10, -random(0, 200));
 
     this.question = _scene;
     }
@@ -78,7 +79,7 @@ loadQuestion().then((question) => {
 });
 
 let questions = [];
-const nbQuestions = 20;
+const nbQuestions = 12;
 
 document.addEventListener('DOMContentLoaded', () => {
   init();
@@ -107,7 +108,7 @@ async function init() {
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 1, 20000 );
-  camera.position.set( 30, 30, 100 );
+  camera.position.set( 0, 50, 100 );
 
   //
 
@@ -191,6 +192,9 @@ async function init() {
   controls.target.set( 0, 10, 0 );
   controls.minDistance = 40.0;
   controls.maxDistance = 200.0;
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.enableRotate = false;
   controls.update();
 
   const waterUniforms = water.material.uniforms;
@@ -248,37 +252,41 @@ function onWindowResize() {
 }
 
 function sous_question(obj1, obj2) {
+  if (!obj1 || !obj2) {
+    return false; // Ensure obj1 and obj2 are defined
+  }
   let distance = obj1.position.distanceTo(obj2.position);
-  if (distance < 10) {
-    console.log('collision');
+  if (distance < 25) {
+    return true;
+  }
+  return false;
+}
+
+function checkCollisions() {
+  if (boat && boat.boat) {
+    questions.forEach((question) => {
+      if (question.question) {
+        if (sous_question(boat.boat, question.question)) {
+          
+          //Ecrire la fonction quizz ici
+
+          scene.remove(question.question);
+        }
+      }
+    });
   }
 }
 
-// function checkCollisions() {
-//   if (boat.boat) {
-//     questions.forEach((question) => {
-//       if (question.question) {
-//         if(sous_question(boat.boat, question.question));{
-//         scene.remove(question.question);
-//         }
-//       }
-//     });
-//   }
-//   questions.forEach((question) => {
-//     sous_question(boat.boat, question.question);
-//   });
-// }
-
 function animate() {
   render();
-  boat.update();
-  // checkCollisions();
+  if (boat && boat.boat) {
+    boat.update();
+    camera.position.set(boat.boat.position.x, boat.boat.position.y + 50, boat.boat.position.z + 100);
+    checkCollisions();
+  }
 }
 
 function render() {
-
-  water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
-
-  renderer.render( scene, camera );
-
+  water.material.uniforms['time'].value += 1.0 / 60.0;
+  renderer.render(scene, camera);
 }
