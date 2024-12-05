@@ -12,6 +12,10 @@ let controls, water, sun;
 
 const loader = new GLTFLoader();
 
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 class Boat {
   constructor() {
     loader.load('assets/boat/scene.gltf', (gltf) => {
@@ -44,12 +48,43 @@ class Boat {
 }
 
 const boat = new Boat();
+class Question {
+  constructor(_scene) {
+    scene.add(_scene);
+    _scene.position.set(random(-300, 300), 10, -random(0, 300));
+
+    this.question = _scene;
+    }
+}
+
+async function loadModel(url) {
+  return new Promise((resolve, reject) => {
+    loader.load(url, (gltf) => {
+      resolve(gltf.scene);
+    });
+  });
+}
+
+let boatModel = null
+async function loadQuestion() {
+  if (!boatModel) {
+    boatModel = await loadModel('assets/question/scene.gltf');
+  }
+  return new Question(boatModel.clone());
+}
+
+loadQuestion().then((question) => {
+  console.log(question);
+});
+
+let questions = [];
+const nbQuestions = 20;
 
 document.addEventListener('DOMContentLoaded', () => {
   init();
 });
 
-function init() {
+async function init() {
 
   const canvas = document.querySelector('.webgl');
   if (!canvas) {
@@ -162,6 +197,11 @@ function init() {
 
   //
 
+  for ( let i = 0; i < nbQuestions; i++ ) {
+    const question = await loadQuestion();
+    questions.push(question);
+  }
+
   window.addEventListener( 'resize', onWindowResize );
 
   window.addEventListener( 'keydown', function(e) {
@@ -207,10 +247,32 @@ function onWindowResize() {
 
 }
 
+function sous_question(obj1, obj2) {
+  let distance = obj1.position.distanceTo(obj2.position);
+  if (distance < 10) {
+    console.log('collision');
+  }
+}
+
+// function checkCollisions() {
+//   if (boat.boat) {
+//     questions.forEach((question) => {
+//       if (question.question) {
+//         if(sous_question(boat.boat, question.question));{
+//         scene.remove(question.question);
+//         }
+//       }
+//     });
+//   }
+//   questions.forEach((question) => {
+//     sous_question(boat.boat, question.question);
+//   });
+// }
+
 function animate() {
   render();
   boat.update();
-
+  // checkCollisions();
 }
 
 function render() {
