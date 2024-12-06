@@ -10,8 +10,32 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 let camera, scene, renderer;
 let controls, water, sun;
 let boatx = 5, boaty = 14, boatz = 50;
+let controlsEnabled = true; // Flag to indicate whether controls are enabled
 
 const loader = new GLTFLoader();
+const textureLoader = new THREE.TextureLoader();
+
+
+
+class Plane extends THREE.Mesh {
+  constructor() {
+    const geometry = new THREE.PlaneGeometry( 20, 10 );
+    const planeTexture = textureLoader.load("../assets/lyreco.jpg");
+    const material = new THREE.MeshStandardMaterial( {map: planeTexture, side: THREE.DoubleSide} );
+    super(geometry, material);
+    this.position.set(boatx+10, boaty-16, boatz);
+    this.rotation.x = Math.PI / 2;
+    this.rotation.z = Math.PI / 2;
+    this.visible = false;
+  }
+}
+
+const plane = new Plane();
+
+const pivot = new THREE.Object3D();
+pivot.position.set(boatx, boaty, boatz);
+pivot.add(plane);
+
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
@@ -34,11 +58,6 @@ class Boat {
     });
   }
 
-  // stop() {
-  //   this.speed.vel = 0;
-  //   this.speed.rot = 0;
-  //   this.speed.xrot = 0;
-  // }
   update() {
     if (this.boat) {
       this.boat.translateX(this.speed.vel);
@@ -111,6 +130,9 @@ async function init() {
   camera.position.set( 0, 50, 100 );
 
   //
+
+  scene.add(plane);
+  scene.add(pivot);
 
   sun = new THREE.Vector3();
 
@@ -210,7 +232,11 @@ async function init() {
 
   window.addEventListener( 'keydown', function(e) {
     if (e.key === 'l') {
-      boat.speed.xrot = 0.02;
+      boat.speed.xrot = 0.1;
+        if (boat.boat.position.x == boatx && boat.boat.position.y == boaty && boat.boat.position.z == boatz) {
+          plane.visible = true;
+          pivot.rotation.set(boat.boat.rotation.x, 0, 0);
+      }
     }
 
     if (e.key === 'ArrowUp') {
@@ -231,6 +257,12 @@ async function init() {
   window.addEventListener( 'keyup', function(e) {
     if (e.key === 'l') {
       boat.speed.xrot = 0;
+      boat.boat.rotation.x = 0;
+      boat.boat.rotation.y = Math.PI / 2;
+      boat.boat.rotation.z = 0;
+      boat.boat.position.y = boaty;
+
+      plane.visible = false; 
     }
 
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -267,8 +299,11 @@ function checkCollisions() {
     questions.forEach((question) => {
       if (question.question) {
         if (sous_question(boat.boat, question.question)) {
+          // controlsEnabled = false
           
           //Ecrire la fonction quizz ici
+
+          // controlsEnabled = true
 
           scene.remove(question.question);
         }
@@ -280,7 +315,13 @@ function checkCollisions() {
 function animate() {
   render();
   if (boat && boat.boat) {
-    boat.update();
+    if (controlsEnabled) {
+      boat.update();
+    }
+    // pivot.position.set(boat.boat.position.x, boat.boat.position.y, boat.boat.position.z);
+    // pivot.rotation.set(boat.boat.rotation.x, 0, 0);
+    pivot.attach(plane);
+    // plane.position.set(boat.boat.position.x+5, boat.boat.position.y- 30, boat.boat.position.z-50);
     camera.position.set(boat.boat.position.x, boat.boat.position.y + 50, boat.boat.position.z + 100);
     checkCollisions();
   }
