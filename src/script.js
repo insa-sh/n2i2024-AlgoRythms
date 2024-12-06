@@ -91,12 +91,12 @@ const quizData = [
 let currentQuestionIndex = 0;
 
 function loadQuestion() {
-    const questionContainer = document.getElementById("e");
+    const questionContainer = document.getElementById("question");
     const choicesContainer = document.getElementById("choices");
     const nextButton = document.getElementById("next-btn");
     const resultContainer = document.getElementById("question");
     console.log(resultContainer);
-
+    
     // Réinitialiser les éléments
     resultContainer.textContent = "";
     choicesContainer.innerHTML = "";
@@ -110,14 +110,14 @@ function loadQuestion() {
     currentQuestion.choices.forEach((choice) => {
         const button = document.createElement("button");
         button.textContent = choice;
-        button.className = "choice-btn"; // Classe générique pour le style initial
+        button.className = "button"; // Classe générique pour le style initial
         button.onclick = () => checkAnswer(button, choice, currentQuestion.correct_answer, currentQuestion.explanation);
         choicesContainer.appendChild(button);
     });
 }
 
 function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
-    const resultContainer = document.getElementById("result");
+    const resultContainer = document.getElementById("question");
     const nextButton = document.getElementById("next-btn");
     const choicesButtons = document.querySelectorAll(".choice-btn");
 
@@ -151,7 +151,8 @@ function nextQuestion() {
     if (currentQuestionIndex < quizData.length) {
         loadQuestion();
     } else {
-        document.getElementById("quiz-container").innerHTML = "<h1>Quiz terminé ! Bravo !</h1>";
+        document.getElementById("question").innerHTML = "<h1>Quiz terminé ! Bravo !</h1>";
+        document.getElementById("choices").style.display = "none";
     }
 }
 
