@@ -7,6 +7,15 @@
   </head>
   <body>
     <canvas class="webgl"></canvas>
+    <div id="quiz-container">
+      <div class="question-container">
+          <h1 id="question">Question</h1>
+          <div id="choices"></div>
+      </div>
+      <p id="result" class="result"></p>
+      <button id="next-btn" style="display:none;" onclick="nextQuestion()">Question Suivante</button>
+  </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
