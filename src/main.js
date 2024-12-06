@@ -214,7 +214,7 @@ async function init() {
     }
 
     if (e.key === 'ArrowUp') {
-      boat.speed.vel = 0.5;
+      boat.speed.vel = 5;
     }
     if (e.key === 'ArrowDown') {
       boat.speed.vel = -0.5;
