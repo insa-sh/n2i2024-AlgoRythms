@@ -11,6 +11,7 @@ let camera, scene, renderer;
 let controls, water, sun;
 let boatx = 5, boaty = 14, boatz = 50;
 let controlsEnabled = true; // Flag to indicate whether controls are enabled
+let collisionDetected = false; // Flag to indicate whether a collision has been detected
 
 const loader = new GLTFLoader();
 const textureLoader = new THREE.TextureLoader();
@@ -69,11 +70,13 @@ class Boat {
 
 const boat = new Boat();
 class Question {
-  constructor(_scene) {
+  constructor(_scene, i) {
     scene.add(_scene);
     _scene.position.set(random(-200, 200), 10, -random(0, 200));
 
     this.question = _scene;
+    this.collisionDetected = false; // Flag to indicate whether a collision has been detected for this question
+    this.indice = i;
     }
 }
 
@@ -86,11 +89,11 @@ async function loadModel(url) {
 }
 
 let boatModel = null
-async function loadQuestion() {
+async function loadQuestion(i) {
   if (!boatModel) {
     boatModel = await loadModel('assets/question/scene.gltf');
   }
-  return new Question(boatModel.clone());
+  return new Question(boatModel.clone(), i);
 }
 
 loadQuestion().then((question) => {
@@ -224,7 +227,7 @@ async function init() {
   //
 
   for ( let i = 0; i < nbQuestions; i++ ) {
-    const question = await loadQuestion();
+    const question = await loadQuestion(i);
     questions.push(question);
   }
 
@@ -240,7 +243,7 @@ async function init() {
     }
 
     if (e.key === 'ArrowUp') {
-      boat.speed.vel = 5;
+      boat.speed.vel = 0.7;
     }
     if (e.key === 'ArrowDown') {
       boat.speed.vel = -0.5;
@@ -297,19 +300,23 @@ function sous_question(obj1, obj2) {
 function checkCollisions() {
   if (boat && boat.boat) {
     questions.forEach((question) => {
-      if (question.question) {
+      if (question.question && !question.collisionDetected) { // Check if a collision has already been detected for this question
         if (sous_question(boat.boat, question.question)) {
-          // controlsEnabled = false
-          
-          //Ecrire la fonction quizz ici
-
-          // controlsEnabled = true
+          question.collisionDetected = true; // Set the flag to indicate a collision has been detected for this question
+          // console.log('Collision detected');
+          // console.log(question.indice);
+          // Ecrire la fonction quizz ici
 
           scene.remove(question.question);
         }
       }
     });
   }
+}
+
+// Reset the collision flag when needed (e.g., after handling the collision)
+function resetCollisionFlag() {
+  collisionDetected = false;
 }
 
 function animate() {
