@@ -2,35 +2,50 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>AlgoRythms</title>
-    <link rel="stylesheet" href="src/style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlgoRythms</title>
+  <link rel="stylesheet" href="src/style.css" />
 </head>
 
 <body>
-<canvas class="webgl"></canvas>
-<div id="interface">
+  <canvas class="webgl"></canvas>
+  <div id="interface">
+    <!-- Contrôles en haut à gauche -->
+    <div id="top-controls">
+      <div id="arrows">
+        <!-- Flèches de contrôle -->
+        <button id="up-btn" class="arrow-button">↑</button>
+        <div>
+          <button id="left-btn" class="arrow-button">←</button>
+          <button id="down-btn" class="arrow-button">↓</button>
+          <button id="right-btn" class="arrow-button">→</button>
+        </div>
+      </div>
+      <!-- Bouton Réinitialiser -->
+      <button id="reset-btn" class="button-param" onclick="resetGame()">R : Réinitialiser</button>
+      <button id="looping-btn" class="button-param" onclick="loopGame()"> L : Looping </button>
+    </div>
     <div id="bottom">
 
-        <div id="script">
-            <div id="character"></div>
-            <!-- <div id="question" class="letter"></div> -->
-            <div id="choices"></div>
-            <div id="storyline">
-                <p id="result">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-                    ultricies
-                    ultricies. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc
-            </div>
-            <button id="next-btn" class="button">Suivant</button>
+      <div id="script">
+        <div id="character"></div>
+        <!-- <div id="question" class="letter"></div> -->
+        <div id="choices"></div>
+        <div id="storyline">
+          <p id="result">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            ultricies
+            ultricies. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc
         </div>
+        <button id="next-btn" class="button">Suivant</button>
+      </div>
 
     </div>
 
 
-</div>
-<script type = "module" src="src/script.js"></script>
- <script type="module" src="/src/main.js"></script>
+  </div>
+  <script type="module" src="src/script.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>
