@@ -22,6 +22,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 1.0));
 scene.background = new THREE.Color(0x000000);
 
 /*---[Text handling]---*/
+const textureLoader = new THREE.TextureLoader();
 const loader = new FontLoader();
 const lineGroup = new THREE.Group();
 scene.add(lineGroup);
@@ -83,7 +84,6 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     }
 
     scene.add(lineGroup);
-    const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load('/fish.jpg', () => {
       const aspect = texture.image.width / texture.image.height;
 
@@ -187,6 +187,8 @@ function centerLineGroup(lineGroup) {
     lineGroup.rotation.x = -Math.PI / 4;
 }
 
+const spaceTexture = textureLoader.load('/star.jpg');
+scene.background = spaceTexture;
 
 /*---[User interaction handling]---*/
 function handleScroll(event) {
