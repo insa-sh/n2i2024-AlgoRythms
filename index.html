@@ -1,21 +1,61 @@
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AlgoRythms</title>
-  </head>
-  <body>
-    <canvas class="webgl"></canvas>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Dynamique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .question-container {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .true-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .false-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
     <div id="quiz-container">
-      <div class="question-container">
-          <h1 id="question">Question</h1>
-          <div id="choices"></div>
-      </div>
-      <p id="result" class="result"></p>
-      <button id="next-btn" style="display:none;" onclick="nextQuestion()">Question Suivante</button>
-  </div>
-
-    <script type="module" src="/src/main.js"></script>
-  </body>
+        <div class="question-container">
+            <h1 id="question">Question</h1>
+            <div id="choices"></div>
+        </div>
+        <p id="result" class="result"></p>
+        <button id="next-btn" style="display:none;" onclick="nextQuestion()">Question Suivante</button>
+    </div>
+    <div id="quiz-container">
+        <div class="question-container">
+            <h1 id="question">Question</h1>
+            <div id="choices"></div>
+        </div>
+        <p id="result" class="result"></p>
+        <img id="homme" src="" alt="Homme Reaction" style="width: 150px; display: none; margin-top: 20px;">
+        <button id="next-btn" style="display:none;" onclick="nextQuestion()">Question Suivante</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>
