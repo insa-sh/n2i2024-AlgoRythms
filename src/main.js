@@ -5,6 +5,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { load } from 'three/examples/jsm/libs/opentype.module.js';
+
+import { loadQuestion2 } from './script.js';
 
 
 let camera, scene, renderer;
@@ -306,6 +309,9 @@ function checkCollisions() {
           // console.log('Collision detected');
           // console.log(question.indice);
           // Ecrire la fonction quizz ici
+          loadQuestion2(question.indice);
+          // bloquer le déplacement du bateau
+          controlsEnabled = false;
 
           scene.remove(question.question);
         }
@@ -337,4 +343,9 @@ function animate() {
 function render() {
   water.material.uniforms['time'].value += 1.0 / 60.0;
   renderer.render(scene, camera);
+}
+
+export function toggleControl() {
+  controlsEnabled = true;
+  // console.log('Controls enabled');
 }

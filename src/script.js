@@ -1,4 +1,9 @@
+import { toggleControl } from './main.js';
+
+
+
 let currentQuestionIndex = 0;
+let score = 0;
 let questions = [];
 
 const getQuestions = async () => {
@@ -8,7 +13,7 @@ const getQuestions = async () => {
 
 async function init() {
     questions = await getQuestions();
-    loadQuestion();
+    loadQuestion2();
 }
 
 function applyLetterAnimation(element) {
@@ -24,10 +29,11 @@ function applyLetterAnimation(element) {
 }
 
 
-function loadQuestion() {
+export function loadQuestion2(indice) {
     const questionContainer = document.getElementById("result");
     const choicesContainer = document.getElementById("choices");
     const nextButton = document.getElementById("next-btn");
+    nextButton.addEventListener('click', nextQuestion);
     const resultContainer = document.getElementById("result");
 
     // Réinitialiser les éléments
@@ -36,7 +42,7 @@ function loadQuestion() {
     nextButton.style.display = "none";
 
     // Charger la question actuelle
-    const currentQuestion = questions[currentQuestionIndex];
+    const currentQuestion = questions[indice];
     questionContainer.textContent = currentQuestion.question;
     applyLetterAnimation(questionContainer);
 
@@ -63,6 +69,7 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
         button.style.backgroundColor = "green"; // Bonne réponse
         resultContainer.innerHTML = `Bonne réponse !<br>${explanation}`;
         resultContainer.style.color = "green";
+        score++;
     } else {
         button.style.backgroundColor = "red"; // Mauvaise réponse
         resultContainer.innerHTML = `Mauvaise réponse.<br>${explanation}`;
@@ -75,15 +82,16 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
             btn.style.backgroundColor = "green";
         }
     });
+    console.log(score);
 
     // Montrer le bouton "Question Suivante"
     nextButton.style.display = "block";
 }
 
-function nextQuestion() {
+export function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        loadQuestion();
+        toggleControl();
     } else {
         document.getElementById("result").innerHTML = "<h1>Quiz terminé ! Bravo !</h1>";
     }
