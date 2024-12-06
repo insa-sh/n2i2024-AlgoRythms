@@ -130,9 +130,9 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
         resultContainer.textContent = `Bonne réponse ! ${explanation}`;
         resultContainer.style.color = "green";
     } else {
-        button.style.backgroundColor = "red"; // Mauvaise réponse
+        button.style.backgroundColor = "#83211a"; // Mauvaise réponse
         resultContainer.textContent = `Mauvaise réponse. ${explanation}`;
-        resultContainer.style.color = "red";
+        resultContainer.style.color = "#83211a";
     }
 
     // Colorer la bonne réponse pour feedback
