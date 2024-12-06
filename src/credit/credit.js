@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';  
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
 /*---[Scene setup]---*/
 const scene = new THREE.Scene();
@@ -9,7 +9,7 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.shadowMap.enabled = true
+renderer.shadowMap.enabled = true;
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -19,59 +19,56 @@ function onWindowResize() {
 window.addEventListener('resize', onWindowResize);
 
 scene.add(new THREE.AmbientLight(0xffffff, 1.0));
-
 scene.background = new THREE.Color(0x000000);
 
 /*---[Text handling]---*/
 const loader = new FontLoader();
-
-const textGroup = new THREE.Group();
-scene.add(textGroup);
+const lineGroup = new THREE.Group();
+scene.add(lineGroup);
 
 let textMeshes = [];
+
 loader.load('/helvetiker_regular.typeface.json', function (font) {
-    // a vertical is equivalent to a newline,
     const texts = [
         { text: 'TEXT 1', link: 'https://www.example1.com', direction: 'horizontal' },
-        { text: 'TEXT 2', link: '', direction: 'vertical' },  
+        { text: 'TEXT 2', link: '', direction: 'vertical' },
         { text: 'TEXT 3', link: 'https://www.example3.com', direction: 'vertical' },
-        { text: 'TEXT 4', link: '', direction: 'vertical' } 
+        { text: 'TEXT 4', link: '', direction: 'vertical' }
     ];
+
     const xspacing = 2;  
-    const yspacing = 6;
+    const yspacing = 3;
 
     let xOffset = 0;
     let yOffset = 0;
 
+    let currentLineGroup = new THREE.Group();
+
     texts.forEach((textData) => {
-        createTextMesh(font, textData, xOffset, yOffset);
+        createTextMesh(font, textData, xOffset, yOffset, currentLineGroup);
         const lastTextMesh = textMeshes[textMeshes.length - 1];
         const textWidth = lastTextMesh.geometry.boundingBox.max.x - lastTextMesh.geometry.boundingBox.min.x;
         const textHeight = lastTextMesh.geometry.boundingBox.max.y - lastTextMesh.geometry.boundingBox.min.y;
 
-        // Update offsets based on the direction of the next text
-        if (textData.direction === 'horizontal') {
-            xOffset += textWidth + xspacing;  // Move the next text mesh to the right
-        } else if (textData.direction === 'vertical') {
+        if (textData.direction === 'vertical') {
             yOffset -= textHeight + yspacing;
-            xOffset = 0; // Reset horizontal position when stacking vertically
+            xOffset = 0;
+
+            centerLineGroup(currentLineGroup);
+
+            lineGroup.add(currentLineGroup);
+            currentLineGroup = new THREE.Group();
+        } else {
+            xOffset += textWidth + xspacing;
         }
     });
 
-    const pivot = new THREE.Object3D();
-    pivot.position.set(0, 20, 0);
-    textMeshes.forEach(mesh => {
-        pivot.add(mesh);  // Add each text mesh to the pivot
-    });
+    if (currentLineGroup.children.length > 0) {
+        centerLineGroup(currentLineGroup);
+        lineGroup.add(currentLineGroup);
+    }
 
-    scene.add(pivot);
-    const lastTextMesh = textMeshes[textMeshes.length - 1];
-    const textWidth = lastTextMesh.geometry.boundingBox.max.x - lastTextMesh.geometry.boundingBox.min.x;
-    const textHeight = lastTextMesh.geometry.boundingBox.max.y - lastTextMesh.geometry.boundingBox.min.y;
-
-    pivot.rotation.x = -Math.PI / 4;
-
-    window.textPivot = pivot;
+    scene.add(lineGroup);
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -101,7 +98,7 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
 
 const clickableTextMeshes = [];
 
-function createTextMesh(font, textData, xOffset, yOffset) {
+function createTextMesh(font, textData, xOffset, yOffset, lineGroup) {
     const geometry = new TextGeometry(textData.text, {
         font: font,
         size: 4,
@@ -126,31 +123,49 @@ function createTextMesh(font, textData, xOffset, yOffset) {
     }
 
     const textMesh = new THREE.Mesh(geometry, materials);
-    textMesh.castShadow = true;
     textMesh.position.z = -50;
-    textMesh.position.x = xOffset - textWidth / 2;  // Position based on xOffset
-    textMesh.position.y = yOffset - textHeight / 2;  // Position based on yOffset
+    textMesh.position.x = xOffset - textWidth / 2;
+    textMesh.position.y = yOffset - textHeight / 2;
 
     if (textData.link) {
         clickableTextMeshes.push({ mesh: textMesh, link: textData.link });
     }
 
-    textGroup.add(textMesh);
-    scene.add(textMesh);
-
+    lineGroup.add(textMesh);
     textMeshes.push(textMesh);
+}
+
+function centerLineGroup(lineGroup) {
+    let totalWidth = 0;
+    let totalSpacing = 0;
+
+    lineGroup.children.forEach((mesh, index) => {
+        const textWidth = mesh.geometry.boundingBox.max.x - mesh.geometry.boundingBox.min.x;
+        totalWidth += textWidth;
+
+        if (index < lineGroup.children.length - 1) {
+            totalSpacing += 2;
+        }
+    });
+
+    totalWidth += totalSpacing;
+
+    const centerOffset = -totalWidth / 2 + 10;
+    lineGroup.position.x = centerOffset;
+    lineGroup.position.y = 20; 
 }
 
 // ANIMATE
 function animate() {
-    if (window.textPivot) {
-        window.textPivot.position.y += 0.05;
-        window.textPivot.position.z -= 0.05;
-    }
+    lineGroup.rotation.x = -Math.PI / 4;
+
+
+    lineGroup.position.y += 0.05;
+    lineGroup.position.z -= 0.05;
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
+
 document.body.appendChild(renderer.domElement);
 animate();
-
