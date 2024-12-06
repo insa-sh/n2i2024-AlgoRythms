@@ -30,13 +30,24 @@ let textMeshes = [];
 
 loader.load('/helvetiker_regular.typeface.json', function (font) {
     const texts = [
-        { text: 'TEXT 1', link: 'https://www.example1.com', direction: 'horizontal' },
-        { text: 'TEXT 2', link: '', direction: 'vertical' },
-        { text: 'TEXT 3', link: 'https://www.example3.com', direction: 'vertical' },
-        { text: 'TEXT 4', link: '', direction: 'vertical' }
+        { text: 'Mael Advisse', link: '', direction: 'horizontal' },
+        { text: '(Github)', link: 'https://github.com/maeladv', direction: 'horizontal' },
+        { text: '- three.js expert', link: '', direction: 'vertical' },
+        { text: 'Louison Bednarowicz', link: '', direction: 'horizontal' },
+        { text: '(Github)', link: 'https://github.com/BillyTheSecond', direction: 'horizontal' },
+        { text: '- frontend master', link: '', direction: 'vertical' },
+        { text: 'Alexandre Boisfer', link: '', direction: 'horizontal' },
+        { text: '(Github)', link: 'https://github.com/LeSurvivant9', direction: 'horizontal' },
+        { text: '- clown', link: '', direction: 'vertical' },
+        { text: 'Nouhaila El Airouko', link: '', direction: 'horizontal' },
+        { text: '(Github)', link: 'https://github.com/Westwoodrit', direction: 'horizontal' },
+        { text: '- a voir', link: '', direction: 'vertical' },
+        { text: 'Ambre Petit', link: '', direction: 'horizontal' },
+        { text: '(Github)', link: 'https://github.com/RedPrismey', direction: 'horizontal' },
+        { text: '- on est là la team', link: '', direction: 'vertical' },
     ];
 
-    const xspacing = 2;  
+    const xspacing = 2;
     const yspacing = 3;
 
     let xOffset = 0;
@@ -124,7 +135,7 @@ function createTextMesh(font, textData, xOffset, yOffset, lineGroup) {
 
     const textMesh = new THREE.Mesh(geometry, materials);
     textMesh.position.z = -50;
-    textMesh.position.x = xOffset - textWidth / 2;
+    textMesh.position.x = xOffset ;
     textMesh.position.y = yOffset - textHeight / 2;
 
     if (textData.link) {
@@ -144,22 +155,26 @@ function centerLineGroup(lineGroup) {
         totalWidth += textWidth;
 
         if (index < lineGroup.children.length - 1) {
-            totalSpacing += 2;
+            totalSpacing += 2; // Adjust the spacing as needed
         }
     });
 
     totalWidth += totalSpacing;
 
-    const centerOffset = -totalWidth / 2 + 10;
+    // Calculate the center offset
+    const centerOffset = -totalWidth / 2;
+
+    // Apply the center offset to the line group
     lineGroup.position.x = centerOffset;
-    lineGroup.position.y = 20; 
+    lineGroup.position.y = 20; // Set this as needed to control vertical height
 }
 
 // ANIMATE
 function animate() {
-    lineGroup.rotation.x = -Math.PI / 4;
-
-
+    // Apply rotation to the entire lineGroup
+    lineGroup.rotation.x = -Math.PI / 4; // Rotate around X-axis (adjust as needed)
+    
+    // Apply the vertical translation (scrolling effect)
     lineGroup.position.y += 0.05;
     lineGroup.position.z -= 0.05;
 
