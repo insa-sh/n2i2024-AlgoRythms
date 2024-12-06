@@ -30,15 +30,32 @@ scene.add(textGroup);
 
 let textMeshes = [];
 loader.load('/helvetiker_regular.typeface.json', function (font) {
+    // a vertical is equivalent to a newline,
     const texts = [
-        { text: 'TEXT 1', link: 'https://www.example1.com' },
-        { text: 'TEXT 2', link: '' },  // No link for this one
-        { text: 'TEXT 3', link: 'https://www.example3.com' }
+        { text: 'TEXT 1', link: 'https://www.example1.com', direction: 'horizontal' },
+        { text: 'TEXT 2', link: '', direction: 'vertical' },  
+        { text: 'TEXT 3', link: 'https://www.example3.com', direction: 'vertical' },
+        { text: 'TEXT 4', link: '', direction: 'vertical' } 
     ];
-    const spacing = 6;
+    const xspacing = 2;  
+    const yspacing = 6;
 
-    texts.forEach((textData, index) => {
-        createTextMesh(font, textData, index * spacing);
+    let xOffset = 0;
+    let yOffset = 0;
+
+    texts.forEach((textData) => {
+        createTextMesh(font, textData, xOffset, yOffset);
+        const lastTextMesh = textMeshes[textMeshes.length - 1];
+        const textWidth = lastTextMesh.geometry.boundingBox.max.x - lastTextMesh.geometry.boundingBox.min.x;
+        const textHeight = lastTextMesh.geometry.boundingBox.max.y - lastTextMesh.geometry.boundingBox.min.y;
+
+        // Update offsets based on the direction of the next text
+        if (textData.direction === 'horizontal') {
+            xOffset += textWidth + xspacing;  // Move the next text mesh to the right
+        } else if (textData.direction === 'vertical') {
+            yOffset -= textHeight + yspacing;
+            xOffset = 0; // Reset horizontal position when stacking vertically
+        }
     });
 
     const pivot = new THREE.Object3D();
@@ -48,11 +65,13 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     });
 
     scene.add(pivot);
+    const lastTextMesh = textMeshes[textMeshes.length - 1];
+    const textWidth = lastTextMesh.geometry.boundingBox.max.x - lastTextMesh.geometry.boundingBox.min.x;
+    const textHeight = lastTextMesh.geometry.boundingBox.max.y - lastTextMesh.geometry.boundingBox.min.y;
 
     pivot.rotation.x = -Math.PI / 4;
 
     window.textPivot = pivot;
-
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -61,34 +80,28 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     window.addEventListener('click', onClick, false);
 
     function onMouseMove(event) {
-        // Normalize mouse coordinates
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
     }
 
     function onClick(event) {
-         // Set up raycast to detect click on the text meshes
         raycaster.setFromCamera(mouse, camera);
 
-        // Check for intersections with clickable text meshes
         const intersects = raycaster.intersectObjects(clickableTextMeshes.map(item => item.mesh));
 
         if (intersects.length > 0) {
             const clickedMesh = intersects[0].object;
-            // Find the corresponding link for the clicked mesh
             const clickedText = clickableTextMeshes.find(item => item.mesh === clickedMesh);
             if (clickedText && clickedText.link) {
-                // Open the URL associated with this mesh
                 window.location.href = clickedText.link;
             }
         }
     }
-
 });
 
-const clickableTextMeshes = [];  // Array to hold clickable text meshes
+const clickableTextMeshes = [];
 
-function createTextMesh(font, textData, yOffset) {
+function createTextMesh(font, textData, xOffset, yOffset) {
     const geometry = new TextGeometry(textData.text, {
         font: font,
         size: 4,
@@ -115,25 +128,17 @@ function createTextMesh(font, textData, yOffset) {
     const textMesh = new THREE.Mesh(geometry, materials);
     textMesh.castShadow = true;
     textMesh.position.z = -50;
-    textMesh.position.x = -textWidth / 2;
-    textMesh.position.y = yOffset - textHeight / 2;
-    
+    textMesh.position.x = xOffset - textWidth / 2;  // Position based on xOffset
+    textMesh.position.y = yOffset - textHeight / 2;  // Position based on yOffset
+
     if (textData.link) {
         clickableTextMeshes.push({ mesh: textMesh, link: textData.link });
     }
 
-    textGroup.add(textMesh); 
+    textGroup.add(textMesh);
     scene.add(textMesh);
 
-    // Add to array
     textMeshes.push(textMesh);
-}
-
-function rotateTextBlock(angle) {
-    textMeshes.forEach((mesh) => {
-        // Apply rotation around X axis
-        mesh.rotation.x = angle;
-    });
 }
 
 // ANIMATE
