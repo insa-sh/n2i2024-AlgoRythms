@@ -1,15 +1,15 @@
 [
     {
         "id": 1,
-        "question": "À quelle partie du corps humain qu'on peut comparer les courants marins, hein ?",
+        "question": "A quelle partie du corps humain qu'on peut comparer les courants marins, hein ?",
         "choices": [
             "Les poumons",
             "Le système digestif",
             "Le système sanguin",
             "La peau"
         ],
-        "correct_answer": "Le système circulatoire",
-        "explanation": "Les courants marins, y transportent chaleur, gaz et nutriments, tout comme le système circulatoire transporte oxygène et nutriments dans l'corps, t'vois.",
+        "correct_answer": "Le système sanguin",
+        "explanation": "Les courants marins, y transportent chaleur, gaz et nutriments, tout comme le système sanguin transporte oxygène et nutriments dans l'corps, t'vois.",
         "image_link": "https://example.com/image1.jpg"
     },
     {
