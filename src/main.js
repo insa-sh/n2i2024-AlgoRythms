@@ -303,8 +303,8 @@ function checkCollisions() {
       if (question.question && !question.collisionDetected) { // Check if a collision has already been detected for this question
         if (sous_question(boat.boat, question.question)) {
           question.collisionDetected = true; // Set the flag to indicate a collision has been detected for this question
-          console.log('Collision detected');
-          console.log(question.indice);
+          // console.log('Collision detected');
+          // console.log(question.indice);
           // Ecrire la fonction quizz ici
 
           scene.remove(question.question);
