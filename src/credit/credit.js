@@ -42,13 +42,14 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
         { text: '- frontend master', link: '', direction: 'vertical' },
         { text: 'Alexandre Boisfer', link: '', direction: 'horizontal' },
         { text: '(Github)', link: 'https://github.com/LeSurvivant9', direction: 'horizontal' },
-        { text: '- clown', link: '', direction: 'vertical' },
+        { text: '- jok3r mdr', link: '', direction: 'vertical' },
         { text: 'Nouhaila El Airouko', link: '', direction: 'horizontal' },
         { text: '(Github)', link: 'https://github.com/Westwoodrit', direction: 'horizontal' },
-        { text: '- a voir', link: '', direction: 'vertical' },
+        { text: '- js, le J c\'est le S', link: '', direction: 'vertical' },
         { text: 'Ambre Petit', link: '', direction: 'horizontal' },
         { text: '(Github)', link: 'https://github.com/RedPrismey', direction: 'horizontal' },
-        { text: '- on est là la team', link: '', direction: 'vertical' },
+        { text: '- je suis la', link: '', direction: 'vertical' },
+        { text: 'Graphique de nos branches :', link: '', direction: 'vertical' },
     ];
 
     const xspacing = 2;
