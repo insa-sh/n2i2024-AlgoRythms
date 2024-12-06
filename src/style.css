@@ -1,96 +1,125 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family : "GameBoy" ;
+  src: url(/assets/fonts/EarlyGameBoy.ttf) format('truetype');
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
 
+html,
 body {
   margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: 'GameBoy';
+  font-size: 20px;
+}
+
+
+
+
+
+
+/* INTERFACE */
+
+
+div#interface {
+  /* background-color: rgba(0, 0, 255, 0.455); */
+  width: 100%;
+  height: 100%;
+  position: absolute;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.button {
+  display: inline-block;
+  font-family: "GameBoy";
+  padding: 8px 16px;
+  border-radius: 2px;
+  margin: 10px;
+  font-size: 12px;
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  /* background-color: rgb(240, 240, 137); */
+  background: radial-gradient(118.45% 118.45% at -7.04% -11.48%, #721965 0%, #f2a008 80%, #e6bc15 100%);
+  font-weight: 900;
+
+  transition: transform 0.2s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+
+.button:hover {
+  transform: scale(1.01);
+}
+
+
+
+
+.button-true {
+  background: #4CAF50;
+  color: white;
+}
+
+.button-false {
+  background: #8a241d;
+  color: white;
+}
+
+
+
+.question-container {
+  margin-bottom: 20px;
+}
+
+.true-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.false-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+
+
+div#storyline {
+  width: -webkit-fill-available;
+  margin: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 20px;
+  border-radius: 2px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  display: none;
+
+}
+
+@keyframes letterAppear {
+  from {
+    opacity: 0;
   }
-  a:hover {
-    color: #747bff;
+  to {
+    opacity: 1;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  animation: letterAppear 0.1s forwards;
 }
