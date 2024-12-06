@@ -38,11 +38,16 @@ export function loadQuestion2(indice) {
     const nextButton = document.getElementById("next-btn");
     nextButton.addEventListener('click', nextQuestion);
     const resultContainer = document.getElementById("result");
+    const characterImage = document.getElementById("character-image");
 
     // Réinitialiser les éléments
     resultContainer.textContent = "";
     choicesContainer.innerHTML = "";
     nextButton.style.display = "none";
+
+    // Réinitialiser l'image du personnage
+    characterImage.src = "assets/images/default.png";
+    characterImage.alt = "Personnage neutre";
 
     // Charger la question actuelle
     const currentQuestion = questions[indice];
@@ -59,10 +64,12 @@ export function loadQuestion2(indice) {
     });
 }
 
+
 function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
     const resultContainer = document.getElementById("result");
     const nextButton = document.getElementById("next-btn");
     const choicesButtons = document.querySelectorAll(".choice-btn");
+    const characterImage = document.getElementById("character-image");
 
     // Désactiver tous les boutons après le clic
     choicesButtons.forEach((btn) => (btn.disabled = true));
@@ -74,24 +81,25 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
         resultContainer.style.color = "green";
         applyLetterAnimation(resultContainer);
         score++;
+
+        // Mettre à jour l'image du personnage (happy)
+        characterImage.src = "assets/images/happy.png";
+        characterImage.alt = "Personnage heureux";
     } else {
         button.style.backgroundColor = "red"; // Mauvaise réponse
         resultContainer.innerHTML = `Mauvaise reponse. <br>${explanation}`;
         resultContainer.style.color = "red";
         applyLetterAnimation(resultContainer);
-    }
 
-    // Colorer la bonne réponse pour feedback
-    choicesButtons.forEach((btn) => {
-        if (btn.textContent === correctAnswer) {
-            btn.style.backgroundColor = "green";
-        }
-    });
-    console.log(score);
+        // Mettre à jour l'image du personnage (sad)
+        characterImage.src = "assets/images/sad.png";
+        characterImage.alt = "Personnage triste";
+    }
 
     // Montrer le bouton "Question Suivante"
     nextButton.style.display = "block";
 }
+
 
 export function nextQuestion() {
 

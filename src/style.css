@@ -142,6 +142,7 @@ div#storyline {
   -webkit-backdrop-filter: blur(10px);
 
   display: none;
+  gap:20px;
 
 }
 
@@ -174,4 +175,19 @@ div#arrows button {
   padding: 4px 8px;
   border-radius: 2px;
   user-select: none;
+}
+
+#character-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#character-image {
+  max-width: 150px;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+#character-image:hover {
+  transform: scale(1.1); /* Zoom léger au survol */
 }
