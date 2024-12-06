@@ -11,6 +11,7 @@ let camera, scene, renderer;
 let controls, water, sun;
 let boatx = 5, boaty = 14, boatz = 50;
 let controlsEnabled = true; // Flag to indicate whether controls are enabled
+let collisionDetected = false; // Flag to indicate whether a collision has been detected
 
 const loader = new GLTFLoader();
 const textureLoader = new THREE.TextureLoader();
@@ -74,6 +75,7 @@ class Question {
     _scene.position.set(random(-200, 200), 10, -random(0, 200));
 
     this.question = _scene;
+    this.collisionDetected = false; // Flag to indicate whether a collision has been detected for this question
     }
 }
 
@@ -297,19 +299,22 @@ function sous_question(obj1, obj2) {
 function checkCollisions() {
   if (boat && boat.boat) {
     questions.forEach((question) => {
-      if (question.question) {
+      if (question.question && !question.collisionDetected) { // Check if a collision has already been detected for this question
         if (sous_question(boat.boat, question.question)) {
-          // controlsEnabled = false
-          
-          //Ecrire la fonction quizz ici
-
-          // controlsEnabled = true
+          question.collisionDetected = true; // Set the flag to indicate a collision has been detected for this question
+          console.log('Collision detected');
+          // Ecrire la fonction quizz ici
 
           scene.remove(question.question);
         }
       }
     });
   }
+}
+
+// Reset the collision flag when needed (e.g., after handling the collision)
+function resetCollisionFlag() {
+  collisionDetected = false;
 }
 
 function animate() {
