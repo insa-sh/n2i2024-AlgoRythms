@@ -83,7 +83,24 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     }
 
     scene.add(lineGroup);
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('/fish.jpg', () => {
+      const aspect = texture.image.width / texture.image.height;
 
+      const planeGeometry = new THREE.PlaneGeometry(6 * aspect, 6);
+      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
+      const imageMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+
+      imageMesh.position.x = xOffset;
+      imageMesh.position.y = yOffset - 15;
+      imageMesh.position.z = -20;
+      imageMesh.rotation.x = -Math.PI/4;
+
+      lineGroup.add(imageMesh);
+  });
+
+
+    /*---[For links handling]---*/
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -170,17 +187,8 @@ function centerLineGroup(lineGroup) {
     lineGroup.rotation.x = -Math.PI / 4;
 }
 
-// ANIMATE
-function animate() {
-    if (!stop) {
-        lineGroup.position.y += 0.05;
-        lineGroup.position.z -= 0.05;
-    }
 
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-}
-
+/*---[User interaction handling]---*/
 function handleScroll(event) {
     const delta = event.deltaY;
 
@@ -196,5 +204,14 @@ function handleSKeyPress(event) {
 }
 window.addEventListener('keydown', handleSKeyPress);
 
+function animate() {
+    if (!stop) {
+        lineGroup.position.y += 0.05;
+        lineGroup.position.z -= 0.05;
+    }
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+}
 document.body.appendChild(renderer.domElement);
 animate();
