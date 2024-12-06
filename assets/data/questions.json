@@ -4,17 +4,17 @@
         "question": "A quelle partie du corps humain qu'on peut comparer les courants marins, hein ?",
         "choices": [
             "Les poumons",
-            "Le système digestif",
-            "Le système sanguin",
+            "Le systeme digestif",
+            "Le systeme sanguin",
             "La peau"
         ],
-        "correct_answer": "Le système sanguin",
-        "explanation": "Les courants marins, y transportent chaleur, gaz et nutriments, tout comme le système sanguin transporte oxygène et nutriments dans l'corps, t'vois.",
+        "correct_answer": "Le systeme sanguin",
+        "explanation": "Les courants marins, y transportent chaleur, gaz et nutriments, tout comme le systeme sanguin transporte oxygene et nutriments dans l'corps, t'vois.",
         "image_link": "https://example.com/image1.jpg"
     },
     {
         "id": 2,
-        "question": "Quelle partie du corps humain qu'on peut comparer au phytoplancton dans l’océan, hein ?",
+        "question": "Quelle partie du corps humain qu'on peut comparer au phytoplancton dans l'ocean, hein ?",
         "choices": [
             "Les cellules de la peau",
             "Les globules rouges",
@@ -22,116 +22,116 @@
             "Le cerveau"
         ],
         "correct_answer": "Les globules rouges",
-        "explanation": "Tout comme les globules rouges transportent et échangent l’oxygène, le phytoplancton produit de l’oxygène grâce à la photosynthèse, essentiel à la vie marine et terrestre, t'vois.",
+        "explanation": "Tout comme les globules rouges transportent et echangent l’oxygene, le phytoplancton produit de l’oxygene grace a la photosynthese, essentiel a la vie marine et terrestre, t'vois.",
         "image_link": "https://example.com/image3.jpg"
     },
     {
         "id": 3,
-        "question": "À quoi qu'on peut comparer la stratification des océans dans l'corps humain, dis ?",
+        "question": "A quoi qu'on peut comparer la stratification des oceans dans l'corps humain, dis ?",
         "choices": [
-            "L’équilibre thermique",
-            "Le système nerveux",
-            "Le système lymphatique",
-            "Le système osseux"
+            "L’equilibre thermique",
+            "Le systeme nerveux",
+            "Le systeme lymphatique",
+            "Le systeme osseux"
         ],
-        "correct_answer": "L’équilibre thermique",
-        "explanation": "La stratification limite les échanges entre les eaux chaudes et froides, comme l'corps qui régule la température, hein.",
+        "correct_answer": "L’equilibre thermique",
+        "explanation": "La stratification limite les echanges entre les eaux chaudes et froides, comme l'corps qui regule la temperature, hein.",
         "image_link": "https://example.com/image4.jpg"
     },
     {
         "id": 4,
-        "question": "Quel phénomène océanique qu'est similaire à la production de déchets dans l'corps humain, hein ?",
+        "question": "Quel phenomene oceanique qu'est similaire a la production de dechets dans l'corps humain, hein ?",
         "choices": [
-            "La création de courants marins",
+            "La creation de courants marins",
             "La production de neige marine",
-            "L’acidification des océans",
+            "L’acidification des oceans",
             "La dissolution des gaz"
         ],
         "correct_answer": "La production de neige marine",
-        "explanation": "Les déchets organiques produits par le phytoplancton, qui coulent sous forme de « neige marine », rappellent les déchets métaboliques du corps humain, t'vois.",
+        "explanation": "Les dechets organiques produits par le phytoplancton, qui coulent sous forme de « neige marine », rappellent les dechets metaboliques du corps humain, t'vois.",
         "image_link": "https://example.com/image5.jpg"
     },
     {
         "id": 5,
-        "question": "Quel écosystème de l'océan qu'est similaire aux poumons humains, dis ?",
+        "question": "Quel ecosysteme de l'ocean qu'est similaire aux poumons humains, dis ?",
         "choices": [
-            "Les récifs coralliens",
+            "Les recifs coralliens",
             "Les mangroves",
             "Les algues",
             "Les zones abyssales"
         ],
         "correct_answer": "Les algues",
-        "explanation": "Les algues, comme les poumons, jouent un rôle crucial dans la production d'oxygène et la filtration de l'eau, contribuant à la santé globale de l'écosystème marin, hein.",
+        "explanation": "Les algues, comme les poumons, jouent un role crucial dans la production d'oxygene et la filtration de l'eau, contribuant a la sante globale de l'ecosysteme marin, hein.",
         "image_link": "https://example.com/image6.jpg"
     },
     {
         "id": 6,
-        "question": "Le cœur de l'océan est représenté par les courants marins, qui fonctionnent comme le système circulatoire du corps humain.",
+        "question": "Le coeur de l'ocean est represente par les courants marins, qui fonctionnent comme le systeme circulatoire du corps humain.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Vrai",
-        "explanation": "Les courants marins, comme le Gulf Stream, distribuent la chaleur et les nutriments dans l'océan, de la même manière que le cœur pompe le sang pour nourrir et oxygéner le corps humain."
+        "explanation": "Les courants marins, comme le Gulf Stream, distribuent la chaleur et les nutriments dans l'ocean, de la meme maniere que le coeur pompe le sang pour nourrir et oxygener le corps humain."
     },
     {
         "id": 7,
-        "question": "La peau du corps humain est comparable à la surface de l'océan, car elle régule l'échange d'eau et de chaleur.",
+        "question": "La peau du corps humain est comparable a la surface de l'ocean, car elle regule l'echange d'eau et de chaleur.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Vrai",
-        "explanation": "La surface de l'océan agit comme une barrière et régule les échanges thermiques entre l'eau et l'atmosphère, tout comme la peau contrôle la température corporelle et prévient la perte d'eau."
+        "explanation": "La surface de l'ocean agit comme une barriere et regule les echanges thermiques entre l'eau et l'atmosphere, tout comme la peau controle la temperature corporelle et previent la perte d'eau."
     },
     {
         "id": 8,
-        "question": "Les globules rouges transportent l'oxygène dans le corps humain, tout comme les dauphins distribuent l'oxygène dans l'océan.",
+        "question": "Les globules rouges transportent l'oxygene dans le corps humain, tout comme les dauphins distribuent l'oxygene dans l'ocean.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Faux",
-        "explanation": "Les globules rouges transportent de l'oxygène aux cellules, mais les dauphins ne jouent aucun rôle dans la distribution d'oxygène dans l'océan. Ce rôle revient principalement au phytoplancton et aux échanges gazeux à la surface."
+        "explanation": "Les globules rouges transportent de l'oxygene aux cellules, mais les dauphins ne jouent aucun role dans la distribution d'oxygene dans l'ocean. Ce role revient principalement au phytoplancton et aux echanges gazeux a la surface."
     },
     {
         "id": 9,
-        "question": "Le système nerveux du corps humain peut être comparé à la thermohaline de l'océan, qui transmet des signaux à travers ses courants.",
+        "question": "Le systeme nerveux du corps humain peut etre compare a la thermohaline de l'ocean, qui transmet des signaux a travers ses courants.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Vrai",
-        "explanation": "La thermohaline est un réseau de courants profonds reliant les océans du monde entier, transmettant des signaux climatiques comme un système nerveux transmet des informations à travers le corps."
+        "explanation": "La thermohaline est un reseau de courants profonds reliant les oceans du monde entier, transmettant des signaux climatiques comme un systeme nerveux transmet des informations a travers le corps."
     },
     {
         "id": 10,
-        "question": "Le foie du corps humain filtre les toxines, tout comme le sable filtre l'eau dans l'océan.",
+        "question": "Le foie du corps humain filtre les toxines, tout comme le sable filtre l'eau dans l'ocean.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Vrai",
-        "explanation": "Le sable joue un rôle de filtre naturel, aidant à purifier l'eau qui passe à travers lui, tout comme le foie filtre les toxines du sang dans le corps humain."
+        "explanation": "Le sable joue un role de filtre naturel, aidant a purifier l'eau qui passe a travers lui, tout comme le foie filtre les toxines du sang dans le corps humain."
     },
     {
         "id": 11,
-        "question": "L'oxygène présent dans l'atmosphère est majoritairement produit par la forêt amazonienne.",
+        "question": "L'oxygene present dans l'atmosphere est majoritairement produit par la foret amazonienne.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Faux",
-        "explanation": "L'océan produit environ 50 à 70 % de l'oxygène de la planète grâce au phytoplancton, un organisme minuscule qui effectue la photosynthèse. La forêt amazonienne est importante, mais elle n'est pas seule."
+        "explanation": "L'ocean produit environ 50 a 70 % de l'oxygene de la planete grace au phytoplancton, un organisme minuscule qui effectue la photosynthese. La foret amazonienne est importante, mais elle n'est pas seule."
     },
     {
         "id": 12,
-        "question": "La salinité de l'océan est essentielle, tout comme le taux de sel dans le sang humain.",
+        "question": "La salinite de l'ocean est essentielle, tout comme le taux de sel dans le sang humain.",
         "choices": [
             "Vrai",
             "Faux"
         ],
         "correct_answer": "Vrai",
-        "explanation": "La salinité de l'océan maintient son équilibre chimique, tout comme la concentration de sel dans le sang humain est cruciale pour les fonctions cellulaires et le métabolisme."
+        "explanation": "La salinite de l'ocean maintient son equilibre chimique, tout comme la concentration de sel dans le sang humain est cruciale pour les fonctions cellulaires et le metabolisme."
     }
 ]

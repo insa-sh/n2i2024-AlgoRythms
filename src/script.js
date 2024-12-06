@@ -72,11 +72,13 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
         button.style.backgroundColor = "green"; // Bonne réponse
         resultContainer.innerHTML = `Bonne réponse !<br>${explanation}`;
         resultContainer.style.color = "green";
+        applyLetterAnimation(resultContainer);
         score++;
     } else {
         button.style.backgroundColor = "red"; // Mauvaise réponse
         resultContainer.innerHTML = `Mauvaise réponse.<br>${explanation}`;
         resultContainer.style.color = "red";
+        applyLetterAnimation(resultContainer);
     }
 
     // Colorer la bonne réponse pour feedback
@@ -102,7 +104,7 @@ export function nextQuestion() {
         
         
     } else {
-        document.getElementById("result").innerHTML = "<h1>Quiz terminé ! Bravo !</h1>";
+        document.getElementById("result").innerHTML = "<h1>Quiz termine ! Bravo !</h1>";
     }
 }
 
