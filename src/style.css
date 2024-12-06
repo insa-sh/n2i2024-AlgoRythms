@@ -1,8 +1,10 @@
 @font-face {
-  font-family : "GameBoy" ;
+  font-family: "GameBoy" ;
   src: url(/assets/fonts/EarlyGameBoy.ttf) format('truetype');
 }
-
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
@@ -13,10 +15,6 @@ body {
   font-family: 'GameBoy';
   font-size: 20px;
 }
-
-
-
-
 
 
 /* INTERFACE */
@@ -31,7 +29,6 @@ div#interface {
   align-items: flex-end;
   justify-content: center;
 }
-
 
 
 .button {
@@ -56,8 +53,6 @@ div#interface {
 }
 
 
-
-
 .button-true {
   background: #4CAF50;
   color: white;
@@ -67,7 +62,6 @@ div#interface {
   background: #8a241d;
   color: white;
 }
-
 
 
 .question-container {
@@ -92,7 +86,6 @@ div#interface {
   margin-top: 20px;
   font-size: 18px;
 }
-
 
 
 div#storyline {
@@ -123,3 +116,40 @@ div#storyline {
   opacity: 0;
   animation: letterAppear 0.1s forwards;
 }
+
+.header {
+  padding: 10px;
+}
+
+.header a {
+  padding: 10px;
+  text-decoration: none;
+  background-color: transparent;
+  color: black;
+  position: relative;
+}
+
+.header a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 2px;
+  left: 10px;
+  right: 10px;
+  background: black;
+  transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
+}
+
+.header a:hover::after {
+  width: calc(100% - 20px);
+  left: 10px;
+  background: black;
+}
+
+.header a i {
+  margin-right: 8px;
+}
+

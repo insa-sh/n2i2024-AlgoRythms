@@ -6,31 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AlgoRythms</title>
     <link rel="stylesheet" href="src/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
+<nav class="header">
+    <a href="/"><i class="fas fa-home"></i>Home</a>
+    <a href="/src/podcasts/podcasts.html"><i class="fas fa-microphone"></i>Podcasts</a>
+    <a href="/src/credits/credits.html"><i class="fa-solid fa-scroll"></i>Credits</a>
+</nav>
 <canvas class="webgl"></canvas>
+
 <div id="interface">
     <div id="bottom">
-
         <div id="script">
             <div id="character"></div>
             <!-- <div id="question" class="letter"></div> -->
             <div id="choices"></div>
             <div id="storyline">
-                <p id="result">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-                    ultricies
-                    ultricies. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc
+                <p id="result"></p>
             </div>
             <button id="next-btn" class="button">Suivant</button>
         </div>
-
     </div>
 
-
 </div>
-<script type = "module" src="src/script.js"></script>
- <script type="module" src="/src/main.js"></script>
+<script type="module" src="/src/script.js"></script>
+<script type="module" src="/src/main.js"></script>
+
 </body>
 
 </html>
