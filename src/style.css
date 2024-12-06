@@ -142,6 +142,7 @@ div#storyline {
   -webkit-backdrop-filter: blur(10px);
 
   display: none;
+  gap: 20px;
 
 }
 
