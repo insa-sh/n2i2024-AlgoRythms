@@ -70,13 +70,13 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
     // Vérifier la réponse sélectionnée
     if (selectedAnswer === correctAnswer) {
         button.style.backgroundColor = "green"; // Bonne réponse
-        resultContainer.innerHTML = `Bonne réponse !<br>${explanation}`;
+        resultContainer.innerHTML = `Bonne reponse ! <br>${explanation}`;
         resultContainer.style.color = "green";
         applyLetterAnimation(resultContainer);
         score++;
     } else {
         button.style.backgroundColor = "red"; // Mauvaise réponse
-        resultContainer.innerHTML = `Mauvaise réponse.<br>${explanation}`;
+        resultContainer.innerHTML = `Mauvaise reponse. <br>${explanation}`;
         resultContainer.style.color = "red";
         applyLetterAnimation(resultContainer);
     }
@@ -94,7 +94,9 @@ function checkAnswer(button, selectedAnswer, correctAnswer, explanation) {
 }
 
 export function nextQuestion() {
+
     currentQuestionIndex++;
+    document.getElementById("result").style.color = "black";
     if (currentQuestionIndex < questions.length) {
         toggleControl();
         // masquer tout
