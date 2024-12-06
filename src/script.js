@@ -91,7 +91,7 @@ const quizData = [
 let currentQuestionIndex = 0;
 
 function loadQuestion() {
-    const questionContainer = document.getElementById("question");
+    const questionContainer = document.getElementById("e");
     const choicesContainer = document.getElementById("choices");
     const nextButton = document.getElementById("next-btn");
     const resultContainer = document.getElementById("question");
