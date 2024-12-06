@@ -1,11 +1,11 @@
-/* Chargement des polices */
 @font-face {
-  font-family: "GameBoy";
+  font-family : "GameBoy" ;
   src: url(/assets/fonts/EarlyGameBoy.ttf) format('truetype');
 }
 
-/* Réinitialisation des marges et styles de base */
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -28,6 +28,7 @@ canvas.webgl {
 
 /* Interface principale */
 div#interface {
+  /* background-color: rgba(0, 0, 255, 0.455); */
   width: 100%;
   height: 100%;
   position: absolute;
@@ -139,7 +140,9 @@ div#storyline {
   border-radius: 2px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
   display: none;
+
 }
 
 /* Animation des lettres */
