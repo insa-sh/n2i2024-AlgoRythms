@@ -244,6 +244,10 @@ async function init() {
           pivot.rotation.set(boat.boat.rotation.x, 0, 0);
       }
     }
+    if (e.key === 'r') {
+      boat.boat.position.set(boatx, boaty, boatz);
+      boat.boat.rotation.set(0, Math.PI / 2, 0);
+    }
 
     if (e.key === 'ArrowUp') {
       boat.speed.vel = 0.7;
