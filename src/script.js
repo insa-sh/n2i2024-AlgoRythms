@@ -13,7 +13,9 @@ const getQuestions = async () => {
 
 async function init() {
     questions = await getQuestions();
-    loadQuestion2();
+    document.getElementById("next-btn").style.display = "none";
+
+    // loadQuestion2();
 }
 
 function applyLetterAnimation(element) {
@@ -30,6 +32,7 @@ function applyLetterAnimation(element) {
 
 
 export function loadQuestion2(indice) {
+    document.getElementById("storyline").style.display = "flex";
     const questionContainer = document.getElementById("result");
     const choicesContainer = document.getElementById("choices");
     const nextButton = document.getElementById("next-btn");
@@ -92,9 +95,19 @@ export function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
         toggleControl();
+        // masquer tout
+        document.getElementById("storyline").style.display = "none";
+        document.getElementById("choices").innerHTML = "";
+        document.getElementById("next-btn").style.display = "none";
+        
+        
     } else {
         document.getElementById("result").innerHTML = "<h1>Quiz terminé ! Bravo !</h1>";
     }
 }
 
+
+
 document.addEventListener('DOMContentLoaded', init);
+
+
