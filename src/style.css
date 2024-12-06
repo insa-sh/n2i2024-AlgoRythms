@@ -161,7 +161,7 @@ div#storyline {
 
 
 div#arrows button {
-  user-select: none;
+  /* user-select: none; */
   cursor: default;
 }
 

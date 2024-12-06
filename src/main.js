@@ -23,11 +23,11 @@ const textureLoader = new THREE.TextureLoader();
 
 class Plane extends THREE.Mesh {
   constructor() {
-    const geometry = new THREE.PlaneGeometry( 20, 10 );
+    const geometry = new THREE.PlaneGeometry( 17, 6 );
     const planeTexture = textureLoader.load("../assets/lyreco.jpg");
     const material = new THREE.MeshStandardMaterial( {map: planeTexture, side: THREE.DoubleSide} );
     super(geometry, material);
-    this.position.set(boatx+10, boaty-16, boatz);
+    this.position.set(boatx+11, boaty-16, boatz);
     this.rotation.x = Math.PI / 2;
     this.rotation.z = Math.PI / 2;
     this.visible = false;
@@ -283,6 +283,30 @@ async function init() {
     }
   });
 }
+
+const reset = document.querySelector(".button-reset");
+reset.addEventListener("click", () => {
+  boat.boat.position.set(boatx, boaty, boatz);
+  boat.boat.rotation.set(0, Math.PI / 2, 0);
+});
+
+const looping = document.querySelector(".button-looping");
+looping.addEventListener("mousedown", () => { 
+  boat.speed.xrot = 0.1;
+    if (boat.boat.position.x == boatx && boat.boat.position.y == boaty && boat.boat.position.z == boatz) {
+      plane.visible = true;
+      pivot.rotation.set(boat.boat.rotation.x, 0, 0);
+      }
+});
+
+looping.addEventListener("mouseup", () => { 
+  boat.speed.xrot = 0;
+  boat.boat.rotation.x = 0;
+  boat.boat.rotation.y = Math.PI / 2;
+  boat.boat.rotation.z = 0;
+  boat.boat.position.y = boaty;
+});
+
 
 function onWindowResize() {
 
