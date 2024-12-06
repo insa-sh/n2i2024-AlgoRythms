@@ -85,15 +85,15 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
     }
 
     scene.add(lineGroup);
-    const texture = textureLoader.load('/fish.jpg', () => {
+    const texture = textureLoader.load('/fish.png', () => {
       const aspect = texture.image.width / texture.image.height;
 
-      const planeGeometry = new THREE.PlaneGeometry(6 * aspect, 6);
+      const planeGeometry = new THREE.PlaneGeometry(15 * aspect, 15);
       const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
       const imageMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
       imageMesh.position.x = xOffset;
-      imageMesh.position.y = yOffset - 15;
+      imageMesh.position.y = yOffset - 12;
       imageMesh.position.z = -20;
       imageMesh.rotation.x = -Math.PI/4;
 
