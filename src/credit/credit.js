@@ -26,10 +26,13 @@ const loader = new FontLoader();
 const lineGroup = new THREE.Group();
 scene.add(lineGroup);
 
+let stop = false;
+
 let textMeshes = [];
 
 loader.load('/helvetiker_regular.typeface.json', function (font) {
     const texts = [
+        { text: 'Press s to stop the scrolling', link: '', direction: 'vertical' },
         { text: 'Mael Advisse', link: '', direction: 'horizontal' },
         { text: '(Github)', link: 'https://github.com/maeladv', direction: 'horizontal' },
         { text: '- three.js expert', link: '', direction: 'vertical' },
@@ -101,10 +104,11 @@ loader.load('/helvetiker_regular.typeface.json', function (font) {
             const clickedMesh = intersects[0].object;
             const clickedText = clickableTextMeshes.find(item => item.mesh === clickedMesh);
             if (clickedText && clickedText.link) {
-                window.location.href = clickedText.link;
+                window.open(clickedText.link, '_blank').focus();
             }
         }
     }
+    
 });
 
 const clickableTextMeshes = [];
@@ -117,8 +121,6 @@ function createTextMesh(font, textData, xOffset, yOffset, lineGroup) {
     });
 
     geometry.computeBoundingBox();
-    const textWidth = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
-    const textHeight = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
 
     let materials;
     if (textData.link) {
@@ -134,9 +136,10 @@ function createTextMesh(font, textData, xOffset, yOffset, lineGroup) {
     }
 
     const textMesh = new THREE.Mesh(geometry, materials);
-    textMesh.position.z = -50;
+    textMesh.position.z = -80;
+    lineGroup.position.y = 30;
     textMesh.position.x = xOffset ;
-    textMesh.position.y = yOffset - textHeight / 2;
+    textMesh.position.y = yOffset;
 
     if (textData.link) {
         clickableTextMeshes.push({ mesh: textMesh, link: textData.link });
@@ -155,32 +158,43 @@ function centerLineGroup(lineGroup) {
         totalWidth += textWidth;
 
         if (index < lineGroup.children.length - 1) {
-            totalSpacing += 2; // Adjust the spacing as needed
+            totalSpacing += 2; 
         }
     });
 
     totalWidth += totalSpacing;
 
-    // Calculate the center offset
     const centerOffset = -totalWidth / 2;
 
-    // Apply the center offset to the line group
     lineGroup.position.x = centerOffset;
-    lineGroup.position.y = 20; // Set this as needed to control vertical height
+    lineGroup.rotation.x = -Math.PI / 4;
 }
 
 // ANIMATE
 function animate() {
-    // Apply rotation to the entire lineGroup
-    lineGroup.rotation.x = -Math.PI / 4; // Rotate around X-axis (adjust as needed)
-    
-    // Apply the vertical translation (scrolling effect)
-    lineGroup.position.y += 0.05;
-    lineGroup.position.z -= 0.05;
+    if (!stop) {
+        lineGroup.position.y += 0.05;
+        lineGroup.position.z -= 0.05;
+    }
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
+
+function handleScroll(event) {
+    const delta = event.deltaY;
+
+    lineGroup.position.y -= delta * 0.05;
+    lineGroup.position.z += delta * 0.05;
+}
+window.addEventListener('wheel', handleScroll);
+
+function handleSKeyPress(event) {
+    if (event.key === 's' || event.key === 'S') {
+        stop = !stop;
+    }
+}
+window.addEventListener('keydown', handleSKeyPress);
 
 document.body.appendChild(renderer.domElement);
 animate();
