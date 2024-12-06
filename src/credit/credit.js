@@ -195,8 +195,8 @@ scene.background = spaceTexture;
 function handleScroll(event) {
     const delta = event.deltaY;
 
-    lineGroup.position.y -= delta * 0.05;
-    lineGroup.position.z += delta * 0.05;
+    lineGroup.position.y += delta * 0.05;
+    lineGroup.position.z -= delta * 0.05;
 }
 window.addEventListener('wheel', handleScroll);
 
