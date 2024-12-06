@@ -142,7 +142,6 @@ div#storyline {
   -webkit-backdrop-filter: blur(10px);
 
   display: none;
-  gap:20px;
 
 }
 
@@ -175,6 +174,42 @@ div#arrows button {
   padding: 4px 8px;
   border-radius: 2px;
   user-select: none;
+}
+
+.header {
+  padding: 10px;
+}
+
+.header a {
+  padding: 10px;
+  text-decoration: none;
+  background-color: transparent;
+  color: black;
+  position: relative;
+}
+
+.header a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 2px;
+  left: 10px;
+  right: 10px;
+  background: black;
+  transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
+}
+
+.header a:hover::after {
+  width: calc(100% - 20px);
+  left: 10px;
+  background: black;
+}
+
+.header a i {
+  margin-right: 8px;
 }
 
 #character-container {
